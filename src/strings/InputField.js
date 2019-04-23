@@ -1,32 +1,16 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class InputField extends Component{
-    constructor(props){
-        super(props);
-        this.state={
-            value:''
-        };
-
-        this.changeValueHandle = this.changeValueHandle.bind(this);
-    }
-
-    changeValueHandle(event){
-        this.setState({value:event.target.value});
-        this.props.onChange(this.state.value)
-    }
-
-    render() {
+function InputField (props) {
         return(
             <div>
-                <p>{this.props.name} is {this.state.value}</p>
+                <p>{props.name} is {props.value}</p>
                 <input
-                    type={this.props.type}
-                    value={this.state.value}
-                    onChange={this.changeValueHandle}
+                    type={props.type}
+                    value={props.value}
+                    onChange={props.onChange}
                 />
             </div>
         )
-    }
 }
 
 export default InputField

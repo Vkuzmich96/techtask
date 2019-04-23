@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import InputField from '../strings/InputField';
-import SandRegistrationForm from '../strings/SandRegistrationForm';
+import SendRegistrationForm from '../strings/SendRegistrationForm';
+import Validator from '../utils/Validator';
+import RequestSander from '../utils/RequestSander'
 
 
 class Registration extends Component {
@@ -11,28 +13,57 @@ class Registration extends Component {
       email:'',
       password:'',
       check:'',
+      error:'',
     };
 
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handleCheckChange = this.handleCheckChange.bind(this);
+    this.changeErrorState = this.changeErrorState.bind(this);
+    this.submitHandle = this.submitHandle.bind(this);
   }
 
-  handleNameChange(value){
-    this.setState({name:value})
+  changeErrorState(value){
+    this.setState({error:value})
   }
 
-  handleEmailChange(value){
-    this.setState({email:value})
+  submitHandle(){
+    // let flag = Validator.isEnterValid(this.state, this.changeErrorState);
+    // if(flag) {
+    //   fetch('http://localhost:8080/registration', {
+    //     mode: "no-cors",
+    //     method: "POST",
+    //     body: JSON.stringify({a: 1, b: 'Textual content'}),
+    //     headers: {
+    //       'Accept': 'application/json',
+    //       'Content-Type': 'application/json'
+        // },
+      // })
+    let flag = Validator.isEnterValid(this.state, this.changeErrorState);
+    if(flag) {
+      RequestSander.sand("/registration?name=" +this.state.name + "&email=" + this.state.email +
+          "&password=" + this.state.password
+      );
+    }
   }
 
-  handlePasswordChange(value){
-    this.setState({password:value})
+
+  handleNameChange(event){
+    let value = event.target.value;
+    this.setState({ name: value})
   }
 
-  handleCheckChange(value){
-    this.setState({check:value})
+  handleEmailChange(event){
+    this.setState({email:event.target.value})
+  }
+
+  handlePasswordChange(event){
+    this.setState({password:event.target.value})
+  }
+
+  handleCheckChange(event){
+    this.setState({check:event.target.value})
   }
 
   render() {
@@ -44,7 +75,8 @@ class Registration extends Component {
           <InputField name='Password' type='password' onChange = {this.handlePasswordChange}/>
           <InputField name='Check' type='password' onChange = {this.handleCheckChange}/>
           <hr/>
-          <SandRegistrationForm state = {this.state}/>
+          <SendRegistrationForm submitHandle = {this.submitHandle}/>
+          <p>{this.state.error}</p>
       </div>
     );
   }

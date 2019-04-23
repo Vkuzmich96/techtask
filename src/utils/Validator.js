@@ -6,9 +6,9 @@ class Validator {
             &&this.isPasswordEqualsCheck(state, callBack)
         ){
             callBack("true");
-            return ("true");
+            return (true);
         } else {
-            return ("false")
+            return (false)
         }
     }
 
@@ -17,9 +17,9 @@ class Validator {
             &&this.isItEmail(state, callBack)
         ){
             callBack("true");
-            return ("true");
+            return (true);
         } else {
-            return ("false")
+            return (false)
         }
     }
 
