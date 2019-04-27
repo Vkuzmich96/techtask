@@ -5,21 +5,21 @@ class Update extends Component {
     constructor(props){
         super(props);
         this.state={
-            email:'',
-            password:'',
+            number:'',
+            address:'',
         };
 
-        this.handlePasswordChange = this.handlePasswordChange.bind(this);
-        this.handleEmailChange = this.handleEmailChange.bind(this);
+        this.handleAddressChange = this.handleAddressChange.bind(this);
+        this.handleNumberChange = this.handleNumberChange.bind(this);
     }
 
 
-    handleEmailChange(value){
-        this.setState({email:value})
+    handleNumberChange(value){
+        this.setState({number:value})
     }
 
-    handlePasswordChange(value){
-        this.setState({password:value})
+    handleAddressChange(value){
+        this.setState({address:value})
     }
 
 
@@ -27,8 +27,8 @@ class Update extends Component {
         return (
             <div className="Update">
                 <p>UPDATE</p>
-                <InputField name='Email' type='text' onChange = {this.handleEmailChange}/>
-                <InputField name='Password' type='password' onChange = {this.handlePasswordChange}/>
+                <InputField name='Phone number' type='text' onChange = {this.handleNumberChange}/>
+                <InputField name='Address' type='text' onChange = {this.handleAddressChange}/>
                 <hr/>
             </div>
         );

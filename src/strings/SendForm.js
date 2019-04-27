@@ -1,6 +1,6 @@
 import React from 'react';
 
-function SendRegistrationForm (props) {
+function SendForm (props) {
     return (
         <div>
             <button
@@ -10,4 +10,4 @@ function SendRegistrationForm (props) {
         </div>
     )
 }
-export default SendRegistrationForm
+export default SendForm

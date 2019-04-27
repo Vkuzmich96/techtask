@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import InputField from '../strings/InputField';
-import SendRegistrationForm from '../strings/SendRegistrationForm';
+import SendForm from '../strings/SendForm';
 import Validator from '../utils/Validator';
 import RequestSander from '../utils/RequestSander'
 
@@ -29,22 +29,15 @@ class Registration extends Component {
   }
 
   submitHandle(){
-    // let flag = Validator.isEnterValid(this.state, this.changeErrorState);
-    // if(flag) {
-    //   fetch('http://localhost:8080/registration', {
-    //     mode: "no-cors",
-    //     method: "POST",
-    //     body: JSON.stringify({a: 1, b: 'Textual content'}),
-    //     headers: {
-    //       'Accept': 'application/json',
-    //       'Content-Type': 'application/json'
-        // },
-      // })
     let flag = Validator.isEnterValid(this.state, this.changeErrorState);
     if(flag) {
-      RequestSander.sand("/registration?name=" +this.state.name + "&email=" + this.state.email +
+      RequestSander.sand(
+          "/registration" +
+          "?name=" + this.state.name +
+          "&email=" + this.state.email +
           "&password=" + this.state.password
       );
+      this.props.history.push("/enter")
     }
   }
 
@@ -75,7 +68,7 @@ class Registration extends Component {
           <InputField name='Password' type='password' onChange = {this.handlePasswordChange}/>
           <InputField name='Check' type='password' onChange = {this.handleCheckChange}/>
           <hr/>
-          <SendRegistrationForm submitHandle = {this.submitHandle}/>
+          <SendForm submitHandle = {this.submitHandle}/>
           <p>{this.state.error}</p>
       </div>
     );

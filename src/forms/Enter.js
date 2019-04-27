@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import InputField from '../strings/InputField';
-import SandEnterForm from '../strings/SandEnterForm';
+import SendForm from "../strings/SendForm";
+import RequestSander from '../utils/RequestSander'
+import Validator from "../utils/Validator";
 
 
 class Enter extends Component {
@@ -9,19 +11,37 @@ class Enter extends Component {
         this.state={
             email:'',
             password:'',
+            error:'',
         };
 
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handleEmailChange = this.handleEmailChange.bind(this);
+        this.submitHandle = this.submitHandle.bind(this);
+        this.onChangeErrorState = this.onChangeErrorState.bind(this);
     }
 
-
-    handleEmailChange(value){
-        this.setState({email:value})
+    submitHandle(){
+        let flag = Validator.isEnterValid(this.state, this.onChangeErrorState);
+        if(flag) {
+            let isLoged = RequestSander.sand(
+                "/enter" +
+                "?email=" + this.state.email +
+                "&password=" + this.state.password
+            );
+            this.props.changeLogIn(isLoged);
+        }
     }
 
-    handlePasswordChange(value){
-        this.setState({password:value})
+    onChangeErrorState(value){
+        this.setState({error:value})
+    }
+
+    handleEmailChange(event){
+        this.setState({email:event.target.value})
+    }
+
+    handlePasswordChange(event){
+        this.setState({password:event.target.value})
     }
 
 
@@ -32,7 +52,7 @@ class Enter extends Component {
                 <InputField name='Email' type='text' onChange = {this.handleEmailChange}/>
                 <InputField name='Password' type='password' onChange = {this.handlePasswordChange}/>
                 <hr/>
-                <SandEnterForm state = {this.state} changeLogIn={this.props.changeLogIn}/>
+                <SendForm submitHandle ={this.submitHandle} />
             </div>
         );
     }

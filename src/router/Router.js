@@ -17,15 +17,15 @@ class Router extends Component{
     }
 
     changeLogInHandle(value){
-        this.setState({warning:value});
+        this.setState({isLog:value});
     }
 
     isLogIn(){
         if(this.state.isLog){
             return <Update/>;
         }
-        this.setState({warning:"before updating you should enter"});
-        return <Redirect to="/"/>;
+        this.setState({warning:"you should enter before updating"});
+        return <Redirect to="/enter"/>;
     }
 
     render() {

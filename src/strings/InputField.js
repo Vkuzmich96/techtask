@@ -3,7 +3,7 @@ import React from 'react';
 function InputField (props) {
         return(
             <div>
-                <p>{props.name} is {props.value}</p>
+                <p>{props.name} {props.value}</p>
                 <input
                     type={props.type}
                     value={props.value}
