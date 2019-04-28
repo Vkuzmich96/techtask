@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import InputField from '../strings/InputField';
-import SendForm from '../strings/SendForm';
+import InputField from '../element/InputField';
+import SendForm from '../element/SendForm';
 import Validator from '../utils/Validator';
 import RequestSander from '../utils/RequestSander'
 
@@ -22,6 +22,8 @@ class Registration extends Component {
     this.handleCheckChange = this.handleCheckChange.bind(this);
     this.changeErrorState = this.changeErrorState.bind(this);
     this.submitHandle = this.submitHandle.bind(this);
+    this.sendRequest = this.sendRequest.bind(this);
+    this.redirect = this.redirect.bind(this);
   }
 
   changeErrorState(value){
@@ -29,22 +31,33 @@ class Registration extends Component {
   }
 
   submitHandle(){
-    let flag = Validator.isEnterValid(this.state, this.changeErrorState);
-    if(flag) {
-      RequestSander.sand(
-          "/registration" +
-          "?name=" + this.state.name +
-          "&email=" + this.state.email +
-          "&password=" + this.state.password
-      );
-      this.props.history.push("/enter")
+    if(Validator.isRegistrationValid(this.state, this.changeErrorState)) {
+      this.sendRequest()
     }
+  }
+
+  redirect(){
+    this.props.history.push("/enter");
+  }
+
+  sendRequest(){
+    RequestSander.send(
+        "/registration" +
+        "?name=" + this.state.name +
+        "&email=" + this.state.email +
+        "&password=" + this.state.password,
+        ()=>{
+          this.redirect();
+        },
+        ()=>{
+          this.setState({error:"user with such email already exists"});
+        }
+    );
   }
 
 
   handleNameChange(event){
-    let value = event.target.value;
-    this.setState({ name: value})
+    this.setState({ name: event.target.value})
   }
 
   handleEmailChange(event){

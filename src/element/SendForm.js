@@ -5,7 +5,7 @@ function SendForm (props) {
         <div>
             <button
                 type="submit"
-                onClick={props.submitHandle}>sand
+                onClick={props.submitHandle}>send
             </button>
         </div>
     )

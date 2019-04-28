@@ -1,11 +1,11 @@
 class Validator {
     static regexp = /@/;
+
     static isRegistrationValid(state, callBack){
-        if(   this.isRegistrationFieldsFilled(state, callBack)
+        if(this.isRegistrationFieldsFilled(state, callBack)
             &&this.isItEmail(state, callBack)
             &&this.isPasswordEqualsCheck(state, callBack)
         ){
-            callBack("true");
             return (true);
         } else {
             return (false)
@@ -13,15 +13,24 @@ class Validator {
     }
 
     static isEnterValid(state, callBack){
-        if(   this.isEnterFieldsFilled(state, callBack)
+        if(this.isEnterFieldsFilled(state, callBack)
             &&this.isItEmail(state, callBack)
         ){
-            callBack("true");
             return (true);
         } else {
             return (false)
         }
     }
+
+    static isUpdateValid(state, callBack){
+        if(state.number&&state.address!==''){
+            return true;
+        } else {
+            callBack("please fill all fields");
+            return false;
+        }
+    };
+
 
     static isItEmail(state, callBack){
         if (state.email.search(this.regexp)!==-1) {
